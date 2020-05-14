@@ -18,7 +18,7 @@ public class ESCreateByDto implements ESDtoOperation{
 	@Override
 	public String toString() {
 		try {
-			String index = SerializeUtil.getDtoIndex(dto.getClass()) != null ? SerializeUtil.getDtoIndex(dto.getClass()).value() : dto.getIndex();
+			String index = SerializeUtil.getElasticsearchEntityIndex(dto.getClass()) != null ? SerializeUtil.getElasticsearchEntityIndex(dto.getClass()).value() : dto.getIndex();
 			return new JSONObject().put(this.operatorName(), new JSONObject().put("_index", index).put("_id", dto.getId())).toString()+"\r\n"
 					+ SerializeUtil.serializeDto(dto).toString() + "\r\n";
 		}

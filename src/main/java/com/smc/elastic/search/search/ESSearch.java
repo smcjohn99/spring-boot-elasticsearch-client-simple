@@ -6,6 +6,8 @@ import org.json.JSONObject;
 public class ESSearch {
 	public static String SORT_DESC = "desc", SORT_ASC = "asc";
 	private JSONObject body;
+	private ESBool query;
+	private ESSort sort;
 	public ESSearch() {
 		body = new JSONObject();
 	}
@@ -19,11 +21,13 @@ public class ESSearch {
 		return this;
 	}
 	public ESSearch query(ESBool query) {
-		body.put("query", query.toDoc());
+		this.query = query;
+		//body.put("query", query.toDoc());
 		return this;
 	}
 	public ESSearch sort(ESSort sort) {
-		body.put("sort", sort.toDoc());
+		this.sort = sort;
+		//body.put("sort", sort.toDoc());
 		return this;
 	}
 	public ESSearch aggregations(Aggregation... aggs) {
@@ -33,16 +37,18 @@ public class ESSearch {
 		body.put("aggs", jsonObject);
 		return this;
 	}
-	public JSONObject getBody(){
-		return this.body;
+	public ESBool getQuery() {
+		return query;
 	}
-	public ESSearch removeField(String field) {
-		try {
-			body.remove("sort");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return this;
+	public ESSort getSort() {
+		return sort;
+	}
+	public JSONObject getBody(){
+		if(query!=null)
+			this.body.put("query", query.toDoc());
+		if(sort!=null)
+			this.body.put("sort", sort.toDoc());
+		return this.body;
 	}
 }
 

@@ -1,6 +1,5 @@
 package com.smc.elastic.search.search;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class ESBool{
@@ -9,27 +8,18 @@ public class ESBool{
 		jsonObject = new JSONObject();
 	}
 	public ESBool must(Condition... condition) {
-		JSONArray jsonArray = new JSONArray();
-		for(Condition cond:condition){
-			jsonArray.put(cond.toDoc());
-		}
-		jsonObject.put("must", jsonArray);
+		for(Condition cond:condition)
+			jsonObject.append("must", cond.toDoc());
 		return this;
 	}
 	public ESBool filter(Condition... condition) {
-		JSONArray jsonArray = new JSONArray();
-		for(Condition cond:condition){
-			jsonArray.put(cond.toDoc());
-		}
-		jsonObject.put("filter", jsonArray);
+		for(Condition cond:condition)
+			jsonObject.append("filter", cond.toDoc());
 		return this;
 	}
 	public ESBool should(Condition... condition) {
-		JSONArray jsonArray = new JSONArray();
-		for(Condition cond:condition){
-			jsonArray.put(cond.toDoc());
-		}
-		jsonObject.put("should", jsonArray);
+		for(Condition cond:condition)
+			jsonObject.append("should", cond.toDoc());
 		return this;
 	}
 	
